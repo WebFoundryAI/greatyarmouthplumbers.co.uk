@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://greatyarmouthplumbers.co.uk/sitemap.xml
