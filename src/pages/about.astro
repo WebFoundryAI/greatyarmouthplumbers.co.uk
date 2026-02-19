@@ -1,0 +1,211 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { Icon } from 'astro-icon/components';
+import { business, yearsInBusiness } from '../data/business';
+import { serviceAreas } from '../data/serviceAreas';
+import { contactUrl } from '../lib/urls';
+
+const title = 'About Us | Great Yarmouth Plumbers';
+const description = 'Learn about Great Yarmouth Plumbers, owned by Sam Altman. Serving Norfolk since 2020 with reliable, professional plumbing services.';
+const years = yearsInBusiness();
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'About Us' },
+];
+
+const values = [
+  {
+    icon: 'lucide:shield-check',
+    title: 'Reliability',
+    text: 'We turn up when we say we will. If we commit to a time, you can count on us to be there.',
+  },
+  {
+    icon: 'lucide:heart-handshake',
+    title: 'Honesty',
+    text: 'We provide clear, upfront pricing on every job. No hidden charges and no unnecessary work.',
+  },
+  {
+    icon: 'lucide:award',
+    title: 'Quality',
+    text: 'We take pride in our workmanship. Every repair and installation is done to the highest standard.',
+  },
+  {
+    icon: 'lucide:users',
+    title: 'Community',
+    text: 'We are a local business that cares about our community. We treat every customer like a neighbour.',
+  },
+];
+---
+
+<BaseLayout {title} {description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'AboutPage',
+      name: title,
+      description: description,
+      url: `${business.website}/about/`,
+      mainEntity: {
+        '@type': business.schemaType,
+        '@id': `${business.website}/#business`,
+        name: business.name,
+        founder: {
+          '@type': 'Person',
+          name: business.owner,
+        },
+        foundingDate: String(business.yearEstablished),
+      },
+    })} />
+  </Fragment>
+
+  <Breadcrumbs items={breadcrumbs} />
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-brand-900 to-brand-800 py-16 text-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">About {business.name}</h1>
+        <p class="mt-4 text-lg text-brand-100">
+          Proudly serving Great Yarmouth and Norfolk since {business.yearEstablished}. We are a local plumbing company built on hard work, honest pricing and quality craftsmanship.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Story -->
+  <section class="bg-white py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div>
+          <h2 class="text-3xl font-extrabold text-gray-900">Our Story</h2>
+          <p class="mt-6 text-lg leading-relaxed text-gray-600">
+            {business.name} was founded in {business.yearEstablished} by {business.owner} with a simple goal: to provide Great Yarmouth and the surrounding Norfolk area with plumbing services that people can trust. Over the past {years} years, we have grown from a one-person operation into a respected local company.
+          </p>
+          <p class="mt-4 text-lg leading-relaxed text-gray-600">
+            We started because we saw a need for plumbers who actually turn up on time, explain the problem in plain English, and charge a fair price. That is still what drives us today. Every member of our team shares these values, and we work hard to live up to them on every single job.
+          </p>
+          <p class="mt-4 text-lg leading-relaxed text-gray-600">
+            Today, we serve {serviceAreas.length} towns and villages across Norfolk and Suffolk, handling everything from emergency call-outs to complete bathroom installations. We are proud to be a part of this community, and we are grateful for the trust our customers place in us.
+          </p>
+        </div>
+        <div class="relative">
+          <div class="aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100">
+            <img
+              src="/images/about-team.webp"
+              alt={`${business.owner} and the ${business.name} team`}
+              class="h-full w-full object-cover"
+              width="600"
+              height="450"
+              loading="lazy"
+            />
+          </div>
+          <div class="absolute -bottom-6 -left-6 rounded-xl bg-brand-600 p-6 text-white shadow-lg">
+            <span class="block text-3xl font-extrabold">{years}+</span>
+            <span class="text-sm font-medium text-brand-100">Years of Service</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Owner Spotlight -->
+  <section class="bg-gray-50 py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl text-center">
+        <div class="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+          <Icon name="lucide:user" class="h-12 w-12" />
+        </div>
+        <h2 class="text-3xl font-extrabold text-gray-900">Meet {business.owner}</h2>
+        <p class="mt-2 text-lg font-medium text-brand-600">Owner &amp; Lead Plumber</p>
+        <p class="mt-6 text-lg leading-relaxed text-gray-600">
+          {business.owner} founded {business.name} in {business.yearEstablished} after spending years working in the plumbing trade. With hands-on experience in every type of plumbing job, from fixing a dripping tap to repiping an entire property, {business.owner} brings real expertise to every project.
+        </p>
+        <p class="mt-4 text-lg leading-relaxed text-gray-600">
+          "I started this company because I believe every homeowner deserves a plumber who is honest, reliable, and does quality work. That is the standard I hold myself and our team to on every job."
+        </p>
+        <p class="mt-4 text-lg leading-relaxed text-gray-600">
+          When not on a job, {business.owner} can be found supporting local community events and staying up to date with the latest plumbing techniques and regulations. This commitment to ongoing learning ensures our customers always receive the best possible service.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="bg-white py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-extrabold text-gray-900">Our Values</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          These principles guide everything we do, from the way we answer the phone to how we leave your home after a job.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {values.map((value) => (
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+              <Icon name={value.icon} class="h-7 w-7" />
+            </div>
+            <h3 class="text-lg font-bold text-gray-900">{value.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-gray-600">{value.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Signals -->
+  <section class="bg-gray-50 py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+          <Icon name="lucide:shield" class="mb-4 h-8 w-8 text-brand-600" />
+          <h3 class="font-bold text-gray-900">Fully Insured</h3>
+          <p class="mt-2 text-sm text-gray-600">
+            We carry full public liability insurance, giving you complete peace of mind when we work in your home or business.
+          </p>
+        </div>
+        <div class="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+          <Icon name="lucide:clock" class="mb-4 h-8 w-8 text-brand-600" />
+          <h3 class="font-bold text-gray-900">24/7 Emergency Service</h3>
+          <p class="mt-2 text-sm text-gray-600">
+            Plumbing emergencies do not wait for business hours. Our emergency line is open around the clock, every day of the year.
+          </p>
+        </div>
+        <div class="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+          <Icon name="lucide:thumbs-up" class="mb-4 h-8 w-8 text-brand-600" />
+          <h3 class="font-bold text-gray-900">Work Guaranteed</h3>
+          <p class="mt-2 text-sm text-gray-600">
+            We stand behind our work. If something is not right, we will come back and fix it at no extra cost to you.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-brand-900 py-16">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-extrabold text-white">Ready to Work With Us?</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-lg text-brand-200">
+        Get in touch today. We would love to hear from you and help with your plumbing needs.
+      </p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a
+          href={business.phoneHref}
+          class="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-brand-900 transition hover:bg-amber-400"
+        >
+          <Icon name="lucide:phone" class="h-5 w-5" />
+          {business.phone}
+        </a>
+        <a
+          href={contactUrl()}
+          class="inline-flex items-center gap-2 rounded-lg border-2 border-white/30 bg-white/10 px-8 py-4 text-lg font-bold text-white transition hover:bg-white/20"
+        >
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

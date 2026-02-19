@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { Icon } from 'astro-icon/components';
+import { getCollection } from 'astro:content';
+import { business } from '../../data/business';
+import { blogUrl, contactUrl } from '../../lib/urls';
+
+const title = 'Plumbing Tips & News | Great Yarmouth Plumbers';
+const description = 'Helpful plumbing tips, maintenance advice and local news from Great Yarmouth Plumbers. Stay informed and keep your plumbing in top shape.';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Blog' },
+];
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+);
+
+const categoryColours: Record<string, string> = {
+  emergency: 'bg-red-50 text-red-700',
+  tips: 'bg-brand-50 text-brand-700',
+  maintenance: 'bg-green-50 text-green-700',
+  news: 'bg-amber-50 text-amber-700',
+};
+---
+
+<BaseLayout {title} {description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Blog',
+      name: title,
+      description: description,
+      url: `${business.website}/blog/`,
+      publisher: {
+        '@type': 'Organization',
+        name: business.name,
+        url: business.website,
+      },
+    })} />
+  </Fragment>
+
+  <Breadcrumbs items={breadcrumbs} />
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-brand-900 to-brand-800 py-16 text-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Plumbing Tips &amp; News</h1>
+        <p class="mt-4 text-lg text-brand-100">
+          Helpful articles from the {business.name} team. Practical advice to keep your plumbing running smoothly, plus updates from our work across Norfolk.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Posts -->
+  <section class="bg-gray-50 py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {posts.length === 0 ? (
+        <div class="mx-auto max-w-lg rounded-xl bg-white p-12 text-center shadow-sm">
+          <Icon name="lucide:file-text" class="mx-auto mb-4 h-12 w-12 text-gray-300" />
+          <h2 class="text-xl font-bold text-gray-900">No Posts Yet</h2>
+          <p class="mt-2 text-gray-600">
+            We are working on our first articles. Check back soon for plumbing tips and local news.
+          </p>
+        </div>
+      ) : (
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <a
+              href={blogUrl(post.id)}
+              class="group flex flex-col overflow-hidden rounded-xl bg-white shadow-md ring-1 ring-gray-100 transition hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div class="flex flex-1 flex-col p-6">
+                <div class="mb-3 flex items-center gap-3">
+                  <span class={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${categoryColours[post.data.category] || 'bg-gray-50 text-gray-700'}`}>
+                    {post.data.category}
+                  </span>
+                  {post.data.readingTime && (
+                    <span class="text-xs text-gray-400">{post.data.readingTime}</span>
+                  )}
+                </div>
+                <h2 class="text-lg font-bold text-gray-900 group-hover:text-brand-700">{post.data.title}</h2>
+                <p class="mt-2 flex-1 text-sm leading-relaxed text-gray-600">{post.data.description}</p>
+                <div class="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
+                  <time datetime={post.data.publishDate} class="text-xs text-gray-400">
+                    {new Date(post.data.publishDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </time>
+                  <span class="text-sm font-semibold text-brand-600 group-hover:text-brand-700">
+                    Read more &rarr;
+                  </span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-brand-900 py-16">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-extrabold text-white">Need Help With Your Plumbing?</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-lg text-brand-200">
+        Our articles are here to help, but sometimes you need a professional. Call us for fast, reliable plumbing service.
+      </p>
+      <div class="mt-8">
+        <a
+          href={business.phoneHref}
+          class="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-brand-900 transition hover:bg-amber-400"
+        >
+          <Icon name="lucide:phone" class="h-5 w-5" />
+          {business.phone}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

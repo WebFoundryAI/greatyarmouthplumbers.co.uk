@@ -1,0 +1,105 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface Review {
+  author: string;
+  date: string;
+  rating: number;
+  text: string;
+  area?: string;
+  service?: string;
+}
+
+export interface Props {
+  reviews: Review[];
+}
+
+const { reviews } = Astro.props;
+
+const BUSINESS_NAME = 'Great Yarmouth Plumbers';
+
+/* Compute aggregate rating for schema */
+const avgRating =
+  reviews.length > 0
+    ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+    : '5.0';
+
+const aggregateSchema = reviews.length > 0
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'LocalBusiness',
+      name: BUSINESS_NAME,
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: avgRating,
+        reviewCount: reviews.length,
+        bestRating: '5',
+        worstRating: '1',
+      },
+      review: reviews.map((r) => ({
+        '@type': 'Review',
+        author: { '@type': 'Person', name: r.author },
+        datePublished: r.date,
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: r.rating,
+          bestRating: '5',
+        },
+        reviewBody: r.text,
+      })),
+    }
+  : null;
+---
+
+{reviews.length > 0 && (
+  <section class="py-10">
+    <h2 class="font-display text-2xl font-bold text-brand-900 mb-6">
+      What our customers say
+    </h2>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {reviews.map((review) => (
+        <div class="rounded-xl border border-stone-200 bg-white p-6 shadow-sm card-hover">
+          {/* Star rating */}
+          <div class="flex items-center gap-0.5 mb-3">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Icon
+                name="lucide:star"
+                class:list={[
+                  'h-4 w-4',
+                  i < Math.round(review.rating)
+                    ? 'text-amber-400 fill-amber-400'
+                    : 'text-stone-300',
+                ]}
+              />
+            ))}
+          </div>
+
+          {/* Review text */}
+          <p class="text-stone-600 text-sm leading-relaxed mb-4">
+            "{review.text}"
+          </p>
+
+          {/* Author + date */}
+          <div class="flex items-center justify-between text-xs text-stone-400">
+            <span class="font-semibold text-stone-700">{review.author}</span>
+            <time datetime={review.date}>
+              {new Date(review.date).toLocaleDateString('en-GB', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </time>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {aggregateSchema && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(aggregateSchema)}
+      />
+    )}
+  </section>
+)}

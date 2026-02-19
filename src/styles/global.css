@@ -1,0 +1,195 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ─────────────────────────────────────────────
+   Theme tokens
+   ───────────────────────────────────────────── */
+@theme {
+  /* Typography */
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Brand palette (blue: trust, water) */
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+  --color-brand-950: #172554;
+
+  /* Stone neutrals */
+  --color-stone-50: #fafaf9;
+  --color-stone-100: #f5f5f4;
+  --color-stone-200: #e7e5e4;
+  --color-stone-300: #d6d3d1;
+  --color-stone-400: #a8a29e;
+  --color-stone-500: #78716c;
+  --color-stone-600: #57534e;
+  --color-stone-700: #44403c;
+  --color-stone-800: #292524;
+  --color-stone-900: #1c1917;
+  --color-stone-950: #0c0a09;
+
+  /* Amber accents (CTAs) */
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+
+  /* Animations */
+  --animate-fade-up: fadeUp 0.6s ease-out both;
+  --animate-fade-in: fadeIn 0.5s ease-out both;
+  --animate-slide-down: slideDown 0.3s ease-out both;
+  --animate-scale-in: scaleIn 0.4s ease-out both;
+}
+
+/* ─────────────────────────────────────────────
+   Keyframes
+   ───────────────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Stagger utilities (no pseudo-selectors allowed)
+   ───────────────────────────────────────────── */
+@utility stagger-1 {
+  animation-delay: 0.1s;
+}
+@utility stagger-2 {
+  animation-delay: 0.2s;
+}
+@utility stagger-3 {
+  animation-delay: 0.3s;
+}
+@utility stagger-4 {
+  animation-delay: 0.4s;
+}
+@utility stagger-5 {
+  animation-delay: 0.5s;
+}
+@utility stagger-6 {
+  animation-delay: 0.6s;
+}
+
+@utility glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@utility editorial-line {
+  position: relative;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--color-brand-600);
+}
+
+/* ─────────────────────────────────────────────
+   Component layer (hover / pseudo-selectors go here)
+   ───────────────────────────────────────────── */
+@layer components {
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .prose-editorial h2 {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    line-height: 1.3;
+    color: var(--color-brand-900);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-editorial h3 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    line-height: 1.4;
+    color: var(--color-brand-800);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .prose-editorial p {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--color-stone-700);
+    margin-bottom: 1rem;
+  }
+  .prose-editorial a {
+    color: var(--color-brand-600);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .prose-editorial a:hover {
+    color: var(--color-brand-800);
+  }
+  .prose-editorial ul,
+  .prose-editorial ol {
+    margin-left: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--color-stone-700);
+  }
+  .prose-editorial ul {
+    list-style-type: disc;
+  }
+  .prose-editorial ol {
+    list-style-type: decimal;
+  }
+  .prose-editorial li {
+    margin-bottom: 0.35rem;
+    line-height: 1.7;
+  }
+  .prose-editorial blockquote {
+    border-left: 4px solid var(--color-brand-300);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--color-stone-600);
+  }
+}

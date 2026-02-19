@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
+import { business } from '../data/business';
+
+const title = 'Page Not Found | Great Yarmouth Plumbers';
+const description = 'The page you are looking for could not be found. Return to the Great Yarmouth Plumbers homepage.';
+---
+
+<BaseLayout {title} {description}>
+  <section class="flex min-h-[60vh] items-center bg-white py-20">
+    <div class="mx-auto max-w-lg px-4 text-center sm:px-6">
+      <div class="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+        <Icon name="lucide:search-x" class="h-12 w-12" />
+      </div>
+      <h1 class="text-5xl font-extrabold text-gray-900">404</h1>
+      <p class="mt-4 text-xl font-medium text-gray-700">Page Not Found</p>
+      <p class="mt-4 text-gray-600">
+        Sorry, the page you are looking for does not exist or has been moved. You can head back to our homepage or give us a call if you need help.
+      </p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-8 py-4 text-lg font-bold text-white transition hover:bg-brand-700"
+        >
+          <Icon name="lucide:home" class="h-5 w-5" />
+          Back to Home
+        </a>
+        <a
+          href={business.phoneHref}
+          class="inline-flex items-center gap-2 rounded-lg border-2 border-brand-200 bg-white px-8 py-4 text-lg font-bold text-brand-700 transition hover:bg-brand-50"
+        >
+          <Icon name="lucide:phone" class="h-5 w-5" />
+          {business.phone}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

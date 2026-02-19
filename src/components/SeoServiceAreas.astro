@@ -1,0 +1,35 @@
+---
+import { serviceAreas } from '../data/serviceAreas';
+import { areaUrl } from '../lib/urls';
+
+export interface Props {
+  currentArea?: string;
+}
+
+const { currentArea } = Astro.props;
+---
+
+<section class="py-8">
+  <h3 class="font-display text-lg font-bold text-brand-900 mb-3">
+    All service areas
+  </h3>
+  <div class="flex flex-wrap gap-2">
+    {serviceAreas.map((area) => {
+      const isCurrent = area.slug === currentArea;
+      return (
+        <a
+          href={areaUrl(area.slug)}
+          class:list={[
+            'inline-block rounded-full px-4 py-1.5 text-sm font-medium transition-colors',
+            isCurrent
+              ? 'bg-brand-600 text-white border border-brand-600'
+              : 'border border-brand-200 bg-brand-50 text-brand-700 hover:bg-brand-100 hover:border-brand-300',
+          ]}
+          aria-current={isCurrent ? 'page' : undefined}
+        >
+          {area.name}
+        </a>
+      );
+    })}
+  </div>
+</section>

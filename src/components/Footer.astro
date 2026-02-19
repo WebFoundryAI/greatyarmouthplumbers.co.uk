@@ -1,0 +1,121 @@
+---
+import { Icon } from 'astro-icon/components';
+import { business } from '../data/business';
+import { serviceTypes } from '../data/serviceTypes';
+import { serviceAreas } from '../data/serviceAreas';
+import { serviceUrl, areaUrl } from '../lib/urls';
+
+const currentYear = new Date().getFullYear();
+const topServices = serviceTypes.slice(0, 5);
+const topAreas = serviceAreas.slice(0, 6);
+
+const companyLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'About Us', href: '/about/' },
+  { label: 'Contact', href: '/contact/' },
+  { label: 'Blog', href: '/blog/' },
+  { label: 'All Services', href: '/services/' },
+  { label: 'Service Areas', href: '/areas/' },
+];
+---
+
+<footer class="bg-brand-900 text-white">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
+      <!-- Column 1: Company -->
+      <div>
+        <h3 class="font-display text-lg font-bold text-white mb-4">Company</h3>
+        <ul class="space-y-2">
+          {companyLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-stone-300 hover:text-amber-400 transition-colors text-sm"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Column 2: Services -->
+      <div>
+        <h3 class="font-display text-lg font-bold text-white mb-4">Services</h3>
+        <ul class="space-y-2">
+          {topServices.map((svc) => (
+            <li>
+              <a
+                href={serviceUrl(svc.slug)}
+                class="text-stone-300 hover:text-amber-400 transition-colors text-sm"
+              >
+                {svc.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Column 3: Areas -->
+      <div>
+        <h3 class="font-display text-lg font-bold text-white mb-4">Areas We Serve</h3>
+        <ul class="space-y-2">
+          {topAreas.map((area) => (
+            <li>
+              <a
+                href={areaUrl(area.slug)}
+                class="text-stone-300 hover:text-amber-400 transition-colors text-sm"
+              >
+                {area.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact Info -->
+      <div>
+        <h3 class="font-display text-lg font-bold text-white mb-4">Contact Us</h3>
+        <ul class="space-y-3 text-sm text-stone-300">
+          <li class="flex items-start gap-2">
+            <Icon name="lucide:phone" class="h-4 w-4 mt-0.5 text-amber-400 shrink-0" />
+            <a href={business.phoneHref} class="hover:text-amber-400 transition-colors">
+              {business.phone}
+            </a>
+          </li>
+          <li class="flex items-start gap-2">
+            <Icon name="lucide:mail" class="h-4 w-4 mt-0.5 text-amber-400 shrink-0" />
+            <a href={`mailto:${business.email}`} class="hover:text-amber-400 transition-colors">
+              {business.email}
+            </a>
+          </li>
+          <li class="flex items-start gap-2">
+            <Icon name="lucide:map-pin" class="h-4 w-4 mt-0.5 text-amber-400 shrink-0" />
+            <span>
+              {business.address.street}<br />
+              {business.address.city}, {business.address.county}<br />
+              {business.address.postcode}
+            </span>
+          </li>
+          <li class="flex items-start gap-2">
+            <Icon name="lucide:clock" class="h-4 w-4 mt-0.5 text-amber-400 shrink-0" />
+            <div>
+              {business.hours.map((h) => (
+                <div>{h.days}: {h.hours}</div>
+              ))}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="border-t border-brand-800">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-stone-400">
+      <p>&copy; {currentYear} {business.name}. All rights reserved.</p>
+      <p>Professional plumbing services in {business.address.city}, {business.address.county}.</p>
+    </div>
+  </div>
+</footer>

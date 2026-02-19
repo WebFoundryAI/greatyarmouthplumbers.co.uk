@@ -1,0 +1,222 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SeoFaq from '../../components/SeoFaq.astro';
+import SeoTestimonials from '../../components/SeoTestimonials.astro';
+import { Icon } from 'astro-icon/components';
+import { business, yearsInBusiness } from '../../data/business';
+import { serviceTypes } from '../../data/serviceTypes';
+import { serviceAreas, getAreaBySlug, getNearbyAreas } from '../../data/serviceAreas';
+import { generateFaqs, getReviewsForPage } from '../../data/seoContent';
+import { comboUrl, areaUrl, contactUrl } from '../../lib/urls';
+
+export function getStaticPaths() {
+  return serviceAreas.map((a) => ({
+    params: { area: a.slug },
+  }));
+}
+
+const { area: areaSlug } = Astro.params;
+const area = getAreaBySlug(areaSlug);
+if (!area) throw new Error(`Area not found: ${areaSlug}`);
+
+const nearby = getNearbyAreas(area);
+const faqs = generateFaqs(area);
+const reviews = getReviewsForPage(area.slug);
+const years = yearsInBusiness();
+
+const title = `Plumber in ${area.name} | Great Yarmouth Plumbers`;
+const description = `Looking for a plumber in ${area.name}? Great Yarmouth Plumbers serves ${area.name} and surrounding areas. Call 01493 334000.`;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Areas', href: '/areas/' },
+  { label: area.name },
+];
+---
+
+<BaseLayout {title} {description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: `Plumbing Services in ${area.name}`,
+      description: description,
+      provider: {
+        '@type': business.schemaType,
+        '@id': `${business.website}/#business`,
+        name: business.name,
+        telephone: business.phone,
+        url: business.website,
+      },
+      areaServed: {
+        '@type': 'City',
+        name: area.name,
+        containedInPlace: {
+          '@type': 'AdministrativeArea',
+          name: area.county,
+        },
+      },
+      url: `${business.website}${areaUrl(area.slug)}`,
+    })} />
+  </Fragment>
+
+  <Breadcrumbs items={breadcrumbs} />
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-brand-900 to-brand-800 py-16 text-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <div class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium text-brand-200 backdrop-blur-sm">
+          <Icon name="lucide:map-pin" class="h-4 w-4" />
+          {area.county}
+        </div>
+        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
+          Plumber in {area.name}
+        </h1>
+        <p class="mt-4 text-lg leading-relaxed text-brand-100">
+          {business.name} provides professional plumbing services to {area.name} and the surrounding {area.county} area. With {years} years of experience, we handle everything from emergency repairs to planned installations.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-4 text-sm text-brand-200">
+          <span class="flex items-center gap-2">
+            <Icon name="lucide:clock" class="h-4 w-4 text-amber-400" />
+            Response time: {area.responseTime}
+          </span>
+          <span class="flex items-center gap-2">
+            <Icon name="lucide:map" class="h-4 w-4 text-amber-400" />
+            Postcodes: {area.zipCodes.join(', ')}
+          </span>
+          <span class="flex items-center gap-2">
+            <Icon name="lucide:users" class="h-4 w-4 text-amber-400" />
+            Pop. {area.population.toLocaleString('en-GB')}
+          </span>
+        </div>
+        <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+          <a
+            href={business.phoneHref}
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-brand-900 transition hover:bg-amber-400"
+          >
+            <Icon name="lucide:phone" class="h-5 w-5" />
+            Call {business.phone}
+          </a>
+          <a
+            href={contactUrl()}
+            class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/30 bg-white/10 px-8 py-4 text-lg font-bold text-white transition hover:bg-white/20"
+          >
+            Get a Free Quote
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Area Description -->
+  <section class="bg-white py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl">
+        <h2 class="text-2xl font-bold text-gray-900">Plumbing Services in {area.name}</h2>
+        <p class="mt-4 text-lg leading-relaxed text-gray-600">
+          {area.description} {business.name} has been serving {area.name} since {business.yearEstablished}, providing reliable plumbing solutions for both homes and businesses. Our team knows the area well, which means faster response times and a better understanding of local plumbing needs.
+        </p>
+        <p class="mt-4 text-lg leading-relaxed text-gray-600">
+          We cover all postcodes in {area.name} ({area.zipCodes.join(', ')}), with a typical response time of {area.responseTime}. Whether it is a leaking tap at midnight or a boiler installation during the week, you can count on us to be there.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="bg-gray-50 py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-extrabold text-gray-900">Services in {area.name}</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          We offer a complete range of plumbing services in {area.name}. Select a service to learn more about pricing and availability.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {serviceTypes.map((service) => (
+          <a
+            href={comboUrl(area.slug, service.slug)}
+            class="group flex flex-col rounded-xl bg-white p-6 shadow-md ring-1 ring-gray-100 transition hover:-translate-y-1 hover:shadow-lg"
+          >
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-brand-50 text-brand-600 transition group-hover:bg-brand-600 group-hover:text-white">
+              <Icon name={service.icon} class="h-6 w-6" />
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 group-hover:text-brand-700">{service.name}</h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-gray-600">{service.shortDescription}</p>
+            <div class="mt-4 flex items-center justify-between">
+              <span class="text-sm font-semibold text-brand-700">From &pound;{service.priceRange.min}</span>
+              {service.emergency && (
+                <span class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-semibold text-red-700">
+                  <Icon name="lucide:zap" class="h-3 w-3" />
+                  24/7
+                </span>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Nearby Areas -->
+  {nearby.length > 0 && (
+    <section class="bg-white py-16">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl font-bold text-gray-900">Nearby Areas We Also Serve</h2>
+        <p class="mt-4 text-lg text-gray-600">
+          In addition to {area.name}, we provide plumbing services to these nearby locations.
+        </p>
+        <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {nearby.map((nearbyArea) => (
+            <a
+              href={areaUrl(nearbyArea.slug)}
+              class="group flex items-center gap-4 rounded-xl bg-gray-50 p-5 transition hover:bg-brand-50"
+            >
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-600 transition group-hover:bg-brand-600 group-hover:text-white">
+                <Icon name="lucide:map-pin" class="h-5 w-5" />
+              </div>
+              <div>
+                <span class="font-bold text-gray-900 group-hover:text-brand-700">{nearbyArea.name}</span>
+                <p class="text-sm text-gray-500">{nearbyArea.county} &middot; {nearbyArea.responseTime}</p>
+              </div>
+              <Icon name="lucide:chevron-right" class="ml-auto h-5 w-5 text-gray-300 group-hover:text-brand-600" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- FAQ -->
+  <SeoFaq faqs={faqs} />
+
+  <!-- Testimonials -->
+  <SeoTestimonials reviews={reviews} />
+
+  <!-- CTA -->
+  <section class="bg-brand-900 py-16">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-extrabold text-white">Need a Plumber in {area.name}?</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-lg text-brand-200">
+        Call {business.name} today for fast, reliable plumbing service in {area.name} and the surrounding area.
+      </p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a
+          href={business.phoneHref}
+          class="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-brand-900 transition hover:bg-amber-400"
+        >
+          <Icon name="lucide:phone" class="h-5 w-5" />
+          {business.phone}
+        </a>
+        <a
+          href={contactUrl()}
+          class="inline-flex items-center gap-2 rounded-lg border-2 border-white/30 bg-white/10 px-8 py-4 text-lg font-bold text-white transition hover:bg-white/20"
+        >
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

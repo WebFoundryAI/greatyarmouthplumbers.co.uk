@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SeoFaq from '../../components/SeoFaq.astro';
+import SeoServiceAreas from '../../components/SeoServiceAreas.astro';
+import { Icon } from 'astro-icon/components';
+import { business } from '../../data/business';
+import { serviceTypes, getServiceBySlug } from '../../data/serviceTypes';
+import { serviceAreas } from '../../data/serviceAreas';
+import { generateFaqs } from '../../data/seoContent';
+import { serviceUrl, comboUrl, contactUrl } from '../../lib/urls';
+
+export function getStaticPaths() {
+  return serviceTypes.map((s) => ({
+    params: { service: s.slug },
+  }));
+}
+
+const { service: serviceSlug } = Astro.params;
+const service = getServiceBySlug(serviceSlug);
+if (!service) throw new Error(`Service not found: ${serviceSlug}`);
+
+const title = `${service.name} | Great Yarmouth Plumbers`;
+const description = `Need ${service.name.toLowerCase()} in Great Yarmouth? Great Yarmouth Plumbers offers professional ${service.name.toLowerCase()}. Call 01493 334000.`;
+const faqs = generateFaqs(serviceAreas[0], service);
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services/' },
+  { label: service.name },
+];
+---
+
+<BaseLayout {title} {description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: service.name,
+      description: service.description,
+      provider: {
+        '@type': business.schemaType,
+        '@id': `${business.website}/#business`,
+        name: business.name,
+        telephone: business.phone,
+        url: business.website,
+      },
+      areaServed: serviceAreas.map((a) => ({
+        '@type': 'City',
+        name: a.name,
+      })),
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'GBP',
+        price: service.priceRange.min,
+        priceSpecification: {
+          '@type': 'PriceSpecification',
+          minPrice: service.priceRange.min,
+          maxPrice: service.priceRange.max,
+          priceCurrency: 'GBP',
+        },
+      },
+      url: `${business.website}${serviceUrl(service.slug)}`,
+    })} />
+  </Fragment>
+
+  <Breadcrumbs items={breadcrumbs} />
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-brand-900 to-brand-800 py-16 text-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-16">
+        <div class="flex-1">
+          <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm">
+            <Icon name={service.icon} class="h-8 w-8 text-amber-400" />
+          </div>
+          <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">{service.name}</h1>
+          <p class="mt-4 text-lg leading-relaxed text-brand-100">{service.description}</p>
+          <div class="mt-6 flex items-center gap-4">
+            <span class="rounded-lg bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm">
+              From &pound;{service.priceRange.min} to &pound;{service.priceRange.max}
+            </span>
+            {service.emergency && (
+              <span class="inline-flex items-center gap-1 rounded-lg bg-red-500/20 px-4 py-2 text-sm font-semibold text-red-200 backdrop-blur-sm">
+                <Icon name="lucide:zap" class="h-4 w-4" />
+                24/7 Emergency
+              </span>
+            )}
+          </div>
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+            <a
+              href={business.phoneHref}
+              class="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-brand-900 transition hover:bg-amber-400"
+            >
+              <Icon name="lucide:phone" class="h-5 w-5" />
+              Call {business.phone}
+            </a>
+            <a
+              href={contactUrl()}
+              class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/30 bg-white/10 px-8 py-4 text-lg font-bold text-white transition hover:bg-white/20"
+            >
+              Get a Free Quote
+            </a>
+          </div>
+        </div>
+        <div class="flex-shrink-0 lg:w-96">
+          <div class="aspect-[4/3] overflow-hidden rounded-2xl bg-brand-700/50">
+            <img
+              src={service.image}
+              alt={`${service.name} service by Great Yarmouth Plumbers`}
+              class="h-full w-full object-cover"
+              width="384"
+              height="288"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Emergency Banner -->
+  {service.emergency && (
+    <section class="bg-red-600 py-4">
+      <div class="mx-auto flex max-w-7xl items-center justify-center gap-3 px-4 text-white sm:px-6 lg:px-8">
+        <Icon name="lucide:alert-triangle" class="h-6 w-6 flex-shrink-0" />
+        <p class="text-center font-semibold">
+          Emergency {service.name.toLowerCase()} available 24/7. Call <a href={business.phoneHref} class="underline">{business.phone}</a> now for immediate help.
+        </p>
+      </div>
+    </section>
+  )}
+
+  <!-- Process Steps -->
+  <section class="bg-white py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-extrabold text-gray-900">Our {service.name} Process</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          We follow a clear, straightforward process so you always know what to expect.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {service.processSteps.map((step, i) => (
+          <div class="relative rounded-xl bg-gray-50 p-6 text-center">
+            <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-600 text-lg font-bold text-white">
+              {i + 1}
+            </div>
+            <h3 class="text-lg font-bold text-gray-900">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-gray-600">{step.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Areas Available -->
+  <section class="bg-gray-50 py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-extrabold text-gray-900">{service.name} Near You</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          We provide {service.name.toLowerCase()} across Great Yarmouth and these surrounding areas. Select your location for local pricing and response times.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {serviceAreas.map((area) => (
+          <a
+            href={comboUrl(area.slug, service.slug)}
+            class="group flex items-center gap-3 rounded-lg bg-white p-4 shadow-sm ring-1 ring-gray-100 transition hover:shadow-md"
+          >
+            <Icon name="lucide:map-pin" class="h-5 w-5 flex-shrink-0 text-brand-600" />
+            <span class="font-medium text-gray-900 group-hover:text-brand-700">{service.name} in {area.name}</span>
+            <Icon name="lucide:chevron-right" class="ml-auto h-4 w-4 text-gray-300 group-hover:text-brand-600" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <SeoFaq faqs={faqs} />
+
+  <!-- CTA -->
+  <section class="bg-brand-900 py-16">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-extrabold text-white">Ready to Book {service.name}?</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-lg text-brand-200">
+        Get in touch today for a free quote. Our team is ready to help with all your {service.name.toLowerCase()} needs.
+      </p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a
+          href={business.phoneHref}
+          class="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-brand-900 transition hover:bg-amber-400"
+        >
+          <Icon name="lucide:phone" class="h-5 w-5" />
+          {business.phone}
+        </a>
+        <a
+          href={contactUrl()}
+          class="inline-flex items-center gap-2 rounded-lg border-2 border-white/30 bg-white/10 px-8 py-4 text-lg font-bold text-white transition hover:bg-white/20"
+        >
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,77 @@
+---
+import type { ServiceArea } from '../data/serviceAreas';
+import type { ServiceType } from '../data/serviceTypes';
+import { serviceTypes } from '../data/serviceTypes';
+import { getNearbyAreas } from '../data/serviceAreas';
+import { serviceUrl, comboUrl, areaUrl } from '../lib/urls';
+
+export interface Props {
+  area: ServiceArea;
+  service?: ServiceType;
+}
+
+const { area, service } = Astro.props;
+
+const nearbyAreas = getNearbyAreas(area);
+---
+
+<aside class="py-8 space-y-8">
+
+  {/* Other services in this area */}
+  <div>
+    <h3 class="font-display text-lg font-bold text-brand-900 mb-3">
+      Other services in {area.name}
+    </h3>
+    <div class="flex flex-wrap gap-2">
+      {serviceTypes
+        .filter((s) => !service || s.slug !== service.slug)
+        .map((s) => (
+          <a
+            href={comboUrl(area.slug, s.slug)}
+            class="inline-block rounded-full border border-brand-200 bg-brand-50 px-4 py-1.5 text-sm font-medium text-brand-700 hover:bg-brand-100 hover:border-brand-300 transition-colors"
+          >
+            {s.name}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  {/* Same service in nearby areas */}
+  {service && nearbyAreas.length > 0 && (
+    <div>
+      <h3 class="font-display text-lg font-bold text-brand-900 mb-3">
+        {service.name} in nearby areas
+      </h3>
+      <div class="flex flex-wrap gap-2">
+        {nearbyAreas.map((nearby) => (
+          <a
+            href={comboUrl(nearby.slug, service.slug)}
+            class="inline-block rounded-full border border-stone-200 bg-stone-50 px-4 py-1.5 text-sm font-medium text-stone-700 hover:bg-stone-100 hover:border-stone-300 transition-colors"
+          >
+            {nearby.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {/* Without a service context, show all areas */}
+  {!service && nearbyAreas.length > 0 && (
+    <div>
+      <h3 class="font-display text-lg font-bold text-brand-900 mb-3">
+        Nearby areas we serve
+      </h3>
+      <div class="flex flex-wrap gap-2">
+        {nearbyAreas.map((nearby) => (
+          <a
+            href={areaUrl(nearby.slug)}
+            class="inline-block rounded-full border border-stone-200 bg-stone-50 px-4 py-1.5 text-sm font-medium text-stone-700 hover:bg-stone-100 hover:border-stone-300 transition-colors"
+          >
+            {nearby.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+</aside>
