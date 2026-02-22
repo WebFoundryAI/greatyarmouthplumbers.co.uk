@@ -15,8 +15,28 @@ export default defineConfig({
     sitemap({
       filter: (page) =>
         !page.includes('/admin/') && !page.includes('/api/'),
-      changefreq: 'weekly',
-      priority: 0.7,
+      serialize(item) {
+        if (item.url === 'https://greatyarmouthplumbers.co.uk/') {
+          item.priority = 1.0;
+          item.changefreq = 'weekly';
+        } else if (/\/(services|areas)\/$/.test(item.url)) {
+          item.priority = 0.9;
+          item.changefreq = 'weekly';
+        } else if (/\/services\/[^/]+\/$/.test(item.url) && !/\/services\/[^/]+\/[^/]+\//.test(item.url)) {
+          item.priority = 0.8;
+          item.changefreq = 'weekly';
+        } else if (/\/areas\/[^/]+\/$/.test(item.url)) {
+          item.priority = 0.8;
+          item.changefreq = 'weekly';
+        } else if (/\/services\/[^/]+\/[^/]+\/$/.test(item.url)) {
+          item.priority = 0.6;
+          item.changefreq = 'monthly';
+        } else {
+          item.priority = 0.5;
+          item.changefreq = 'monthly';
+        }
+        return item;
+      },
     }),
   ],
 

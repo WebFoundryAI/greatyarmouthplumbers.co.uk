@@ -4,17 +4,7 @@
 
 import type { ServiceArea } from './serviceAreas';
 import type { ServiceType } from './serviceTypes';
-
-// Local constants (duplicated from business.ts to avoid circular imports)
-const BUSINESS_NAME = 'Great Yarmouth Plumbers';
-const OWNER_NAME = 'Sam Altman';
-const PHONE = '01493 334000';
-const LICENSE = '';
-const YEAR_ESTABLISHED = 2020;
-
-function yearsInBusiness(): number {
-  return new Date().getFullYear() - YEAR_ESTABLISHED;
-}
+import { business, yearsInBusiness } from './business';
 
 // ── FAQ generation ────────────────────────────
 
@@ -39,20 +29,20 @@ export function generateFaqs(
     .join(', ');
 
   const priceAnswer = service
-    ? `Typical costs for ${serviceNameLower} in ${area.name} range from \u00a3${service.priceRange.min} to \u00a3${service.priceRange.max}, depending on the complexity of the job. ${BUSINESS_NAME} always provides a clear quote before any work begins, so there are no surprises. Call us on ${PHONE} for a free estimate.`
-    : `The cost depends on the type of work required. ${BUSINESS_NAME} provides transparent, upfront pricing for every job in ${area.name}. Call us on ${PHONE} to discuss your needs and get a no-obligation quote.`;
+    ? `Typical costs for ${serviceNameLower} in ${area.name} range from \u00a3${service.priceRange.min} to \u00a3${service.priceRange.max}, depending on the complexity of the job. ${business.name} always provides a clear quote before any work begins, so there are no surprises. Call us on ${business.phone} for a free estimate.`
+    : `The cost depends on the type of work required. ${business.name} provides transparent, upfront pricing for every job in ${area.name}. Call us on ${business.phone} to discuss your needs and get a no-obligation quote.`;
 
-  const responseAnswer = `Our typical response time to ${area.name} is approximately ${area.responseTime}. For emergencies we aim to arrive even sooner. ${BUSINESS_NAME} covers ${area.name} and the wider ${area.county} area, so help is never far away.`;
+  const responseAnswer = `Our typical response time to ${area.name} is approximately ${area.responseTime}. For emergencies we aim to arrive even sooner. ${business.name} covers ${area.name} and the wider ${area.county} area, so help is never far away.`;
 
-  const licenceAnswer = LICENSE
-    ? `Yes. ${BUSINESS_NAME} is fully insured and holds Gas Safe registration number ${LICENSE}. Our plumbers have ${yearsInBusiness()} years of experience serving ${area.name} and surrounding areas. You can verify our credentials at any time.`
-    : `Yes. ${BUSINESS_NAME} is fully insured and our plumbers have ${yearsInBusiness()} years of experience serving ${area.name} and the surrounding ${area.county} area. We are happy to provide proof of insurance on request.`;
+  const licenceAnswer = business.license
+    ? `Yes. ${business.name} is fully insured and holds Gas Safe registration number ${business.license}. Our plumbers have ${yearsInBusiness()} years of experience serving ${area.name} and surrounding areas. You can verify our credentials at any time.`
+    : `Yes. ${business.name} is fully insured and our plumbers have ${yearsInBusiness()} years of experience serving ${area.name} and the surrounding ${area.county} area. We are happy to provide proof of insurance on request.`;
 
   const emergencyAnswer = service?.emergency
-    ? `Absolutely. ${serviceName} is one of our 24/7 emergency services. If you have an urgent ${serviceNameLower} problem in ${area.name}, call ${BUSINESS_NAME} on ${PHONE} and we will get to you as quickly as possible.`
-    : `Yes, ${BUSINESS_NAME} offers 24/7 emergency plumbing services across ${area.name}. Whether it is a burst pipe, a blocked drain, or a flooding emergency, call us on ${PHONE} any time of day or night.`;
+    ? `Absolutely. ${serviceName} is one of our 24/7 emergency services. If you have an urgent ${serviceNameLower} problem in ${area.name}, call ${business.name} on ${business.phone} and we will get to you as quickly as possible.`
+    : `Yes, ${business.name} offers 24/7 emergency plumbing services across ${area.name}. Whether it is a burst pipe, a blocked drain, or a flooding emergency, call us on ${business.phone} any time of day or night.`;
 
-  const nearbyAnswer = `In addition to ${area.name}, ${BUSINESS_NAME} serves ${nearbyList} and other communities across ${area.county}. We cover a 20-mile radius from Great Yarmouth, so wherever you are in the area, we can help.`;
+  const nearbyAnswer = `In addition to ${area.name}, ${business.name} serves ${nearbyList} and other communities across ${area.county}. We cover a 20-mile radius from Great Yarmouth, so wherever you are in the area, we can help.`;
 
   return [
     {
@@ -64,7 +54,7 @@ export function generateFaqs(
       answer: responseAnswer,
     },
     {
-      question: `Is ${BUSINESS_NAME} fully licensed and insured?`,
+      question: `Is ${business.name} fully licensed and insured?`,
       answer: licenceAnswer,
     },
     {

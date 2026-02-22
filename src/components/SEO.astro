@@ -14,6 +14,7 @@ const {
   title: rawTitle,
   description,
   canonicalUrl,
+  // TODO: Create /public/images/og-default.webp (1200x630px) for social sharing previews
   ogImage = '/images/og-default.webp',
   schema,
   noindex = false,
@@ -50,6 +51,12 @@ const ogImageUrl = ogImage.startsWith('http')
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageUrl} />
+
+<!-- Geo meta tags for local SEO -->
+<meta name="geo.region" content="GB-NFK" />
+<meta name="geo.placename" content="Great Yarmouth" />
+<meta name="geo.position" content="52.6039;1.7278" />
+<meta name="ICBM" content="52.6039, 1.7278" />
 
 <!-- JSON-LD structured data -->
 {schema && (

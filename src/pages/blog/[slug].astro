@@ -38,25 +38,38 @@ const formattedDate = publishDate.toLocaleDateString('en-GB', {
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
-      '@type': 'BlogPosting',
-      headline: post.data.title,
-      description: post.data.description,
-      datePublished: post.data.publishDate,
-      author: {
-        '@type': 'Organization',
-        name: post.data.author || business.name,
-        url: business.website,
-      },
-      publisher: {
-        '@type': 'Organization',
-        name: business.name,
-        url: business.website,
-      },
-      mainEntityOfPage: {
-        '@type': 'WebPage',
-        '@id': `${business.website}${blogUrl(post.id)}`,
-      },
-      url: `${business.website}${blogUrl(post.id)}`,
+      '@graph': [
+        {
+          '@type': 'BlogPosting',
+          headline: post.data.title,
+          description: post.data.description,
+          datePublished: post.data.publishDate,
+          author: {
+            '@type': 'Organization',
+            name: post.data.author || business.name,
+            url: business.website,
+          },
+          publisher: {
+            '@type': 'Organization',
+            name: business.name,
+            url: business.website,
+          },
+          mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': `${business.website}${blogUrl(post.id)}`,
+          },
+          url: `${business.website}${blogUrl(post.id)}`,
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: breadcrumbs.map((item, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: item.label,
+            ...(item.href ? { item: `${business.website}${item.href}` } : {}),
+          })),
+        },
+      ],
     })} />
   </Fragment>
 
