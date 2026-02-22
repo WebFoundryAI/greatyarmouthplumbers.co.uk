@@ -35,32 +35,45 @@ const breadcrumbs = [
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
-      '@type': 'Service',
-      name: service.name,
-      description: service.description,
-      provider: {
-        '@type': business.schemaType,
-        '@id': `${business.website}/#business`,
-        name: business.name,
-        telephone: business.phone,
-        url: business.website,
-      },
-      areaServed: serviceAreas.map((a) => ({
-        '@type': 'City',
-        name: a.name,
-      })),
-      offers: {
-        '@type': 'Offer',
-        priceCurrency: 'GBP',
-        price: service.priceRange.min,
-        priceSpecification: {
-          '@type': 'PriceSpecification',
-          minPrice: service.priceRange.min,
-          maxPrice: service.priceRange.max,
-          priceCurrency: 'GBP',
+      '@graph': [
+        {
+          '@type': 'Service',
+          name: service.name,
+          description: service.description,
+          provider: {
+            '@type': business.schemaType,
+            '@id': `${business.website}/#business`,
+            name: business.name,
+            telephone: business.phone,
+            url: business.website,
+          },
+          areaServed: serviceAreas.map((a) => ({
+            '@type': 'City',
+            name: a.name,
+          })),
+          offers: {
+            '@type': 'Offer',
+            priceCurrency: 'GBP',
+            price: service.priceRange.min,
+            priceSpecification: {
+              '@type': 'PriceSpecification',
+              minPrice: service.priceRange.min,
+              maxPrice: service.priceRange.max,
+              priceCurrency: 'GBP',
+            },
+          },
+          url: `${business.website}${serviceUrl(service.slug)}`,
         },
-      },
-      url: `${business.website}${serviceUrl(service.slug)}`,
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: breadcrumbs.map((item, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: item.label,
+            ...(item.href ? { item: `${business.website}${item.href}` } : {}),
+          })),
+        },
+      ],
     })} />
   </Fragment>
 
@@ -111,7 +124,7 @@ const breadcrumbs = [
               class="h-full w-full object-cover"
               width="384"
               height="288"
-              loading="lazy"
+              loading="eager"
             />
           </div>
         </div>

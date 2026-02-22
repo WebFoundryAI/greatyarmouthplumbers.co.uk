@@ -39,25 +39,38 @@ const breadcrumbs = [
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
-      '@type': 'Service',
-      name: `Plumbing Services in ${area.name}`,
-      description: description,
-      provider: {
-        '@type': business.schemaType,
-        '@id': `${business.website}/#business`,
-        name: business.name,
-        telephone: business.phone,
-        url: business.website,
-      },
-      areaServed: {
-        '@type': 'City',
-        name: area.name,
-        containedInPlace: {
-          '@type': 'AdministrativeArea',
-          name: area.county,
+      '@graph': [
+        {
+          '@type': 'Service',
+          name: `Plumbing Services in ${area.name}`,
+          description: description,
+          provider: {
+            '@type': business.schemaType,
+            '@id': `${business.website}/#business`,
+            name: business.name,
+            telephone: business.phone,
+            url: business.website,
+          },
+          areaServed: {
+            '@type': 'City',
+            name: area.name,
+            containedInPlace: {
+              '@type': 'AdministrativeArea',
+              name: area.county,
+            },
+          },
+          url: `${business.website}${areaUrl(area.slug)}`,
         },
-      },
-      url: `${business.website}${areaUrl(area.slug)}`,
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: breadcrumbs.map((item, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: item.label,
+            ...(item.href ? { item: `${business.website}${item.href}` } : {}),
+          })),
+        },
+      ],
     })} />
   </Fragment>
 

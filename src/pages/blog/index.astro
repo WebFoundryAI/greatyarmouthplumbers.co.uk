@@ -19,10 +19,10 @@ const posts = (await getCollection('blog')).sort(
 );
 
 const categoryColours: Record<string, string> = {
-  emergency: 'bg-red-50 text-red-700',
   tips: 'bg-brand-50 text-brand-700',
   maintenance: 'bg-green-50 text-green-700',
   news: 'bg-amber-50 text-amber-700',
+  guides: 'bg-purple-50 text-purple-700',
 };
 ---
 
@@ -30,15 +30,28 @@ const categoryColours: Record<string, string> = {
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
-      '@type': 'Blog',
-      name: title,
-      description: description,
-      url: `${business.website}/blog/`,
-      publisher: {
-        '@type': 'Organization',
-        name: business.name,
-        url: business.website,
-      },
+      '@graph': [
+        {
+          '@type': 'Blog',
+          name: title,
+          description: description,
+          url: `${business.website}/blog/`,
+          publisher: {
+            '@type': 'Organization',
+            name: business.name,
+            url: business.website,
+          },
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: breadcrumbs.map((item, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: item.label,
+            ...(item.href ? { item: `${business.website}${item.href}` } : {}),
+          })),
+        },
+      ],
     })} />
   </Fragment>
 

@@ -43,20 +43,33 @@ const values = [
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
-      '@type': 'AboutPage',
-      name: title,
-      description: description,
-      url: `${business.website}/about/`,
-      mainEntity: {
-        '@type': business.schemaType,
-        '@id': `${business.website}/#business`,
-        name: business.name,
-        founder: {
-          '@type': 'Person',
-          name: business.owner,
+      '@graph': [
+        {
+          '@type': 'AboutPage',
+          name: title,
+          description: description,
+          url: `${business.website}/about/`,
+          mainEntity: {
+            '@type': business.schemaType,
+            '@id': `${business.website}/#business`,
+            name: business.name,
+            founder: {
+              '@type': 'Person',
+              name: business.owner,
+            },
+            foundingDate: String(business.yearEstablished),
+          },
         },
-        foundingDate: String(business.yearEstablished),
-      },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: breadcrumbs.map((item, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: item.label,
+            ...(item.href ? { item: `${business.website}${item.href}` } : {}),
+          })),
+        },
+      ],
     })} />
   </Fragment>
 
