@@ -11,7 +11,7 @@ const description = 'Helpful plumbing tips, maintenance advice and local news fr
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
-  { label: 'Blog' },
+  { label: 'Plumbing Tips' },
 ];
 
 const posts = (await getCollection('blog')).sort(
@@ -35,7 +35,7 @@ const categoryColours: Record<string, string> = {
           '@type': 'Blog',
           name: title,
           description: description,
-          url: `${business.website}/blog/`,
+          url: `${business.website}/plumbing-tips/`,
           publisher: {
             '@type': 'Organization',
             name: business.name,
@@ -111,6 +111,29 @@ const categoryColours: Record<string, string> = {
           ))}
         </div>
       )}
+    </div>
+  </section>
+
+  <!-- Blog Intro Content -->
+  <section class="bg-white py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <h2 class="text-2xl font-extrabold text-gray-900">Practical Plumbing Advice for Norfolk Homeowners</h2>
+        <div class="mt-6 space-y-4 text-gray-600 leading-relaxed">
+          <p>
+            Our blog is written by the {business.name} team to help homeowners and tenants across Great Yarmouth and Norfolk look after their plumbing. We cover a wide range of topics, from simple maintenance tips you can do yourself to advice on when it is time to call in a professional.
+          </p>
+          <p>
+            Many common plumbing problems can be prevented with a little knowledge and regular upkeep. Our articles explain how to spot the early warning signs of issues like frozen pipes in winter, slow-draining sinks, and inefficient water heaters. We also share step-by-step guides for basic tasks such as bleeding radiators, checking stopcock valves, and maintaining your outside taps before the cold weather arrives.
+          </p>
+          <p>
+            Living on the Norfolk coast brings its own plumbing challenges. Salt air, high humidity, and older housing stock all contribute to faster wear on pipes and fittings. Our blog includes advice specific to properties in Great Yarmouth, Gorleston-on-Sea, Caister-on-Sea, and the surrounding area, helping you protect your home from the most common issues we see on a daily basis.
+          </p>
+          <p>
+            Whether you are a first-time homeowner, a landlord managing rental properties, or simply want to keep your plumbing in good working order, you will find useful information here. If you have a question that is not covered in our articles, feel free to get in touch on {business.phone} and we will be happy to help.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 

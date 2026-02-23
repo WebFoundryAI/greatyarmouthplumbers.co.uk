@@ -8,6 +8,8 @@ import { serviceTypes } from '../data/serviceTypes';
 const title = 'Contact Us | Great Yarmouth Plumbers';
 const description = 'Contact Great Yarmouth Plumbers for a free quote. Call 01493 334000 or fill in our online form. Emergency plumbing available 24/7.';
 
+const contactEmailHtml = `<!--email_off--><a href="mailto:${business.email}" class="font-semibold text-gray-900 hover:text-brand-700">${business.email}</a><!--email_on-->`;
+
 const breadcrumbs = [
   { label: 'Home', href: '/' },
   { label: 'Contact' },
@@ -189,9 +191,7 @@ const breadcrumbs = [
                 <Icon name="lucide:mail" class="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-600" />
                 <div>
                   <p class="text-sm font-medium text-gray-500">Email</p>
-                  <a href={`mailto:${business.email}`} class="font-semibold text-gray-900 hover:text-brand-700">
-                    {business.email}
-                  </a>
+                  <Fragment set:html={contactEmailHtml} />
                 </div>
               </div>
               <div class="flex items-start gap-3">
@@ -220,6 +220,28 @@ const breadcrumbs = [
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- What to Expect -->
+  <section class="bg-gray-50 py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <h2 class="text-2xl font-extrabold text-gray-900">What to Expect When You Contact Us</h2>
+        <div class="mt-6 space-y-4 text-gray-600 leading-relaxed">
+          <p>
+            When you get in touch with {business.name}, you will speak to a friendly member of our team who will take the time to understand your plumbing problem. We will ask a few questions about the issue, your property, and your preferred availability so that we can arrange a visit at a time that suits you.
+          </p>
+          <p>
+            For non-emergency enquiries submitted through our contact form, we aim to respond within a few hours during normal business hours. If your message arrives outside of working hours, we will get back to you first thing the following morning. For urgent problems such as burst pipes, flooding, or gas leaks, we strongly recommend calling us directly on {business.phone} so we can dispatch a plumber to you immediately.
+          </p>
+          <p>
+            Before any work begins, our plumber will carry out an assessment and provide you with a clear, written quote. There are no hidden call-out fees and no surprises. If additional work is needed beyond the original quote, we will always discuss it with you and get your approval before proceeding.
+          </p>
+          <p>
+            We serve homes and businesses across Great Yarmouth, Gorleston-on-Sea, Caister-on-Sea, Bradwell, Lowestoft, and surrounding areas in Norfolk and Suffolk. Whether you need a simple repair or a larger project, we are happy to provide a free, no-obligation estimate. Get in touch today and let us take care of your plumbing.
+          </p>
         </div>
       </div>
     </div>

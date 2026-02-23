@@ -34,7 +34,7 @@ export function aboutUrl(): string {
 /** Blog listing or individual post */
 export function blogUrl(slug?: string): string {
   if (slug) {
-    return `/blog/${slug}/`;
+    return `/plumbing-tips/${slug}/`;
   }
-  return '/blog/';
+  return '/plumbing-tips/';
 }

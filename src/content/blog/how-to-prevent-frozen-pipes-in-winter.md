@@ -1,5 +1,5 @@
 ---
-title: "How to Prevent Frozen Pipes This Winter in Great Yarmouth"
+title: "Prevent Frozen Pipes This Winter"
 description: "Protect your home from frozen pipes this winter. Practical tips for Great Yarmouth homeowners to avoid burst pipes, water damage, and costly repairs."
 publishDate: "2025-11-15"
 author: "Great Yarmouth Plumbers"

@@ -20,10 +20,14 @@ const {
   noindex = false,
 } = Astro.props;
 
-/* Auto-append business name if not already present */
+/* Auto-append business name if not already present and title stays under 60 chars */
+const MAX_TITLE_LENGTH = 60;
+const withBrand = `${rawTitle} | ${SITE_NAME}`;
 const title = rawTitle.includes(SITE_NAME)
   ? rawTitle
-  : `${rawTitle} | ${SITE_NAME}`;
+  : withBrand.length <= MAX_TITLE_LENGTH
+    ? withBrand
+    : rawTitle;
 
 const canonical = canonicalUrl || Astro.url.href;
 const ogImageUrl = ogImage.startsWith('http')

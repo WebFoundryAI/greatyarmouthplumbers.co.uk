@@ -9,11 +9,13 @@ const currentYear = new Date().getFullYear();
 const topServices = serviceTypes.slice(0, 5);
 const topAreas = serviceAreas.slice(0, 6);
 
+const emailHtml = `<!--email_off--><a href="mailto:${business.email}" class="hover:text-amber-400 transition-colors">${business.email}</a><!--email_on-->`;
+
 const companyLinks = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about/' },
   { label: 'Contact', href: '/contact/' },
-  { label: 'Blog', href: '/blog/' },
+  { label: 'Blog', href: '/plumbing-tips/' },
   { label: 'All Services', href: '/services/' },
   { label: 'Service Areas', href: '/areas/' },
 ];
@@ -86,9 +88,7 @@ const companyLinks = [
           </li>
           <li class="flex items-start gap-2">
             <Icon name="lucide:mail" class="h-4 w-4 mt-0.5 text-amber-400 shrink-0" />
-            <a href={`mailto:${business.email}`} class="hover:text-amber-400 transition-colors">
-              {business.email}
-            </a>
+            <Fragment set:html={emailHtml} />
           </li>
           <li class="flex items-start gap-2">
             <Icon name="lucide:map-pin" class="h-4 w-4 mt-0.5 text-amber-400 shrink-0" />

@@ -1,5 +1,5 @@
 ---
-title: "A Complete Guide to Choosing a New Water Heater"
+title: "Guide to Choosing a Water Heater"
 description: "Comparing combi boilers, system boilers, and unvented cylinders for UK homes. A practical guide to help you choose the right water heater for your property."
 publishDate: "2025-09-05"
 author: "Great Yarmouth Plumbers"

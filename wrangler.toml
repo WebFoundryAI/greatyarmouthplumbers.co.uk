@@ -1,3 +1,10 @@
-name = "greatyarmouthplumbers-co-uk"
-pages_build_output_dir = "./dist"
-compatibility_date = "2024-12-01"
+name = "great-yarmouth-plumbers-co-uk"
+compatibility_date = "2025-01-01"
+
+routes = [
+  { pattern = "greatyarmouthplumbers.co.uk/*", zone_name = "greatyarmouthplumbers.co.uk" },
+  { pattern = "www.greatyarmouthplumbers.co.uk/*", zone_name = "greatyarmouthplumbers.co.uk" }
+]
+
+[assets]
+directory = "./dist"
