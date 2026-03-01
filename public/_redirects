@@ -1,7 +1,2 @@
-# www to non-www redirect (301 permanent)
-https://www.greatyarmouthplumbers.co.uk/* https://greatyarmouthplumbers.co.uk/:splat 301
-http://www.greatyarmouthplumbers.co.uk/* https://greatyarmouthplumbers.co.uk/:splat 301
-http://greatyarmouthplumbers.co.uk/* https://greatyarmouthplumbers.co.uk/:splat 301
-
 /blog/ /plumbing-tips/ 301
 /blog/* /plumbing-tips/:splat 301
