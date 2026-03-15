@@ -1,2 +1,3 @@
 /blog/ /plumbing-tips/ 301
 /blog/* /plumbing-tips/:splat 301
+/sitemap.xml /sitemap-index.xml 301
