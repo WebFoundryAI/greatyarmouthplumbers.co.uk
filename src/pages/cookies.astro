@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { business } from '../data/business';
+
+const title = 'Cookie Policy | Great Yarmouth Plumbers';
+const description = 'Cookie Policy for Great Yarmouth Plumbers. Learn about the cookies we use and how you can control them.';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Cookie Policy' },
+];
+
+const lastUpdated = '16 March 2026';
+---
+
+<BaseLayout {title} {description}>
+  <Breadcrumbs items={breadcrumbs} />
+
+  <section class="bg-gradient-to-br from-brand-900 to-brand-800 py-12 text-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-extrabold tracking-tight">Cookie Policy</h1>
+      <p class="mt-2 text-brand-200">Last updated: {lastUpdated}</p>
+    </div>
+  </section>
+
+  <section class="bg-white py-12">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <div class="prose prose-gray max-w-none">
+
+        <h2>What Are Cookies?</h2>
+        <p>
+          Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work efficiently, to remember your preferences, and to provide information to website owners.
+        </p>
+
+        <h2>How We Use Cookies</h2>
+        <p>
+          {business.name} ({business.website}) uses cookies to improve your browsing experience and to understand how visitors use our site. We use the following categories of cookies:
+        </p>
+
+        <h3>Strictly Necessary Cookies</h3>
+        <p>
+          These cookies are essential for the website to function. They enable core features such as page navigation and access to secure areas. The website cannot function properly without these cookies, and they cannot be switched off.
+        </p>
+
+        <h3>Analytics Cookies</h3>
+        <p>
+          We use Google Analytics to collect anonymous information about how visitors use our website — for example, which pages are visited most often, how visitors found us, and any errors they encounter. This helps us improve the site over time. Analytics cookies collect information in an anonymous form and do not identify individual visitors.
+        </p>
+        <p>
+          Google Analytics cookies used:
+        </p>
+        <ul>
+          <li><strong>_ga</strong> — distinguishes unique users; expires after 2 years.</li>
+          <li><strong>_ga_XXXXXXXX</strong> — stores session state; expires after 2 years.</li>
+          <li><strong>_gid</strong> — distinguishes unique users; expires after 24 hours.</li>
+        </ul>
+        <p>
+          You can opt out of Google Analytics by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics Opt-out Browser Add-on</a>.
+        </p>
+
+        <h3>Preference Cookies</h3>
+        <p>
+          These cookies remember choices you make, such as language preferences or cookie consent decisions, to provide a more personalised experience.
+        </p>
+
+        <h2>Third-Party Cookies</h2>
+        <p>
+          Our website may include content from third-party services (such as embedded maps or social media buttons) that set their own cookies. We do not control these cookies and recommend checking the privacy policies of those services for more information.
+        </p>
+
+        <h2>Managing Cookies</h2>
+        <p>
+          You can control and delete cookies through your browser settings. Most browsers allow you to:
+        </p>
+        <ul>
+          <li>See what cookies are stored and delete them individually.</li>
+          <li>Block third-party cookies.</li>
+          <li>Block all cookies from specific websites.</li>
+          <li>Block all cookies entirely (note: this may affect how some websites function).</li>
+        </ul>
+        <p>
+          For guidance on managing cookies in popular browsers, visit:
+        </p>
+        <ul>
+          <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Google Chrome</a></li>
+          <li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" target="_blank" rel="noopener noreferrer">Mozilla Firefox</a></li>
+          <li><a href="https://support.apple.com/en-gb/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">Apple Safari</a></li>
+          <li><a href="https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge" target="_blank" rel="noopener noreferrer">Microsoft Edge</a></li>
+        </ul>
+
+        <h2>Your Consent</h2>
+        <p>
+          When you first visit our website, you will be asked to consent to the use of non-essential cookies. You can change your preferences at any time by clearing your browser cookies and revisiting the site.
+        </p>
+
+        <h2>Changes to This Cookie Policy</h2>
+        <p>
+          We may update this Cookie Policy from time to time. The most recent version will always be available on this page.
+        </p>
+
+        <h2>Contact Us</h2>
+        <p>
+          If you have any questions about our use of cookies, please contact us at <a href={`mailto:${business.email}`}>{business.email}</a> or call <a href={business.phoneHref}>{business.phone}</a>.
+        </p>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>

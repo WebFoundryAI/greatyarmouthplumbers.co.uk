@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { business } from '../data/business';
+
+const title = 'Terms & Conditions | Great Yarmouth Plumbers';
+const description = 'Terms and conditions for Great Yarmouth Plumbers. Please read before using our website or engaging our services.';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Terms & Conditions' },
+];
+
+const lastUpdated = '16 March 2026';
+---
+
+<BaseLayout {title} {description}>
+  <Breadcrumbs items={breadcrumbs} />
+
+  <section class="bg-gradient-to-br from-brand-900 to-brand-800 py-12 text-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-extrabold tracking-tight">Terms &amp; Conditions</h1>
+      <p class="mt-2 text-brand-200">Last updated: {lastUpdated}</p>
+    </div>
+  </section>
+
+  <section class="bg-white py-12">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <div class="prose prose-gray max-w-none">
+
+        <h2>1. About Us</h2>
+        <p>
+          {business.name} is a plumbing services business operating from {business.address.street}, {business.address.city}, {business.address.county}, {business.address.postcode}. By using our website ({business.website}) or engaging our services, you agree to these Terms and Conditions.
+        </p>
+
+        <h2>2. Our Services</h2>
+        <p>
+          We provide plumbing and drainage services to domestic and commercial customers across Great Yarmouth and the surrounding Norfolk and Suffolk area. Services include (but are not limited to) emergency call-outs, boiler servicing, drain unblocking, bathroom installations, and general plumbing repairs.
+        </p>
+
+        <h2>3. Quotations and Pricing</h2>
+        <ul>
+          <li>All quotations are provided in good faith and are valid for 30 days unless otherwise stated.</li>
+          <li>Fixed-price quotes are binding once accepted in writing or verbally confirmed.</li>
+          <li>Additional charges may apply if work is found to be more complex than anticipated once work has begun. We will inform you before proceeding with any additional work.</li>
+          <li>Emergency call-out charges apply for out-of-hours work and will be communicated clearly before attendance.</li>
+        </ul>
+
+        <h2>4. Booking and Cancellation</h2>
+        <ul>
+          <li>Appointments can be made by phone, email, or through our website contact form.</li>
+          <li>We ask for at least 24 hours' notice if you need to cancel or reschedule a non-emergency appointment.</li>
+          <li>A cancellation charge may apply for appointments cancelled with less than 2 hours' notice.</li>
+          <li>We reserve the right to reschedule appointments due to operational requirements, and will provide as much notice as possible.</li>
+        </ul>
+
+        <h2>5. Payment</h2>
+        <ul>
+          <li>Payment is due upon completion of work unless a credit account has been agreed in advance.</li>
+          <li>We accept cash, bank transfer, and most major debit/credit cards.</li>
+          <li>Invoices not settled within 14 days may incur a late payment charge in accordance with the Late Payment of Commercial Debts (Interest) Act 1998.</li>
+        </ul>
+
+        <h2>6. Guarantee and Liability</h2>
+        <ul>
+          <li>All workmanship is guaranteed for 12 months from the date of completion.</li>
+          <li>Parts and materials carry the manufacturer's warranty where applicable.</li>
+          <li>Our liability is limited to the cost of rectifying the specific work carried out.</li>
+          <li>We are not liable for any consequential loss, damage, or injury caused by pre-existing faults or conditions not identified or created by our work.</li>
+          <li>We carry full public liability insurance. Details are available on request.</li>
+        </ul>
+
+        <h2>7. Website Use</h2>
+        <p>
+          The content on this website is provided for general information purposes only. We make every effort to ensure accuracy but do not warrant that the content is complete, accurate, or up to date. We reserve the right to change or remove content at any time.
+        </p>
+        <p>
+          You may not reproduce, distribute, or use any content from this website without our prior written permission.
+        </p>
+
+        <h2>8. Intellectual Property</h2>
+        <p>
+          All content on this website, including text, images, logos, and design, is the property of {business.name} or its licensors. All rights are reserved.
+        </p>
+
+        <h2>9. Governing Law</h2>
+        <p>
+          These Terms and Conditions are governed by the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales.
+        </p>
+
+        <h2>10. Changes to These Terms</h2>
+        <p>
+          We reserve the right to update these Terms and Conditions at any time. The current version will always be published on this page.
+        </p>
+
+        <h2>11. Contact Us</h2>
+        <p>
+          If you have any questions about these Terms and Conditions, please contact us at <a href={`mailto:${business.email}`}>{business.email}</a> or call <a href={business.phoneHref}>{business.phone}</a>.
+        </p>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>
