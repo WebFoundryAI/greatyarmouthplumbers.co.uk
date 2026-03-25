@@ -8,6 +8,7 @@ import icon from 'astro-icon';
 export default defineConfig({
   site: 'https://greatyarmouthplumbers.co.uk',
   output: 'static',
+  compressHTML: true,
   trailingSlash: 'always',
 
   integrations: [
