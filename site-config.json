@@ -1,0 +1,14 @@
+{
+  "site_name": "Great Yarmouth Plumber",
+  "city": "Great Yarmouth",
+  "region": "Norfolk",
+  "country": "England",
+  "tier": 3,
+  "domain": "greatyarmouthplumbers.co.uk",
+  "layout_variant": "hero-cta",
+  "theme_variant": "trust-blue",
+  "status": "active",
+  "github_repo": "https://github.com/WebFoundryAI/greatyarmouthplumbers.co.uk.git",
+  "source_folder": "rank-to-rent-sites/greatyarmouthplumbers.co.uk",
+  "notes": "Tier 3 site. Migrated from existing rank-to-rent-sites folder."
+}
