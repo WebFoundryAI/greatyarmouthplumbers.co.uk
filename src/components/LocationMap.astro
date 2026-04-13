@@ -3,11 +3,12 @@ interface Props {
   lat: number;
   lng: number;
   locationName: string;
+  address?: string;
   zoom?: number;
 }
 
-const { lat, lng, locationName, zoom = 14 } = Astro.props;
-const query = encodeURIComponent(`${locationName}`);
+const { lat, lng, locationName, address, zoom = 14 } = Astro.props;
+const query = encodeURIComponent(address ?? locationName);
 const embedUrl = `https://www.google.com/maps?q=${query}&z=${zoom}&output=embed`;
 ---
 

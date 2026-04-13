@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { business } from '../../data/business';
+import { serviceAreas } from '../../data/serviceAreas';
+import { serviceTypes } from '../../data/serviceTypes';
+import { generateFaqs } from '../../data/seoContent';
+
+const title = 'FAQ | Great Yarmouth Plumbers';
+const description = 'Frequently asked questions about plumbing services in Great Yarmouth and Norfolk. Pricing, response times, credentials, emergency cover, and more.';
+
+const primaryArea = serviceAreas.find((a) => a.slug === 'great-yarmouth')!;
+
+// Collect FAQs: general (no service) + one set per service
+const generalFaqs = generateFaqs(primaryArea);
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'FAQ', href: '/faq/' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'FAQPage',
+      name: title,
+      description: description,
+      url: `${business.website}/faq/`,
+      mainEntity: generalFaqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbs.map((item, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: item.label,
+        item: `${business.website}${item.href}`,
+      })),
+    },
+  ],
+};
+---
+
+<BaseLayout {title} {description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </Fragment>
+
+  <Breadcrumbs items={breadcrumbs} />
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-brand-900 to-brand-800 py-16 text-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Frequently Asked Questions</h1>
+        <p class="mt-4 text-lg text-brand-100">
+          Common questions about our plumbing services in Great Yarmouth and the surrounding Norfolk area.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ List -->
+  <section class="bg-white py-16">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <dl class="divide-y divide-gray-200">
+        {generalFaqs.map((faq) => (
+          <div class="py-8">
+            <dt class="text-lg font-bold text-gray-900">{faq.question}</dt>
+            <dd class="mt-3 text-base leading-relaxed text-gray-600">{faq.answer}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <!-- Services FAQ sections -->
+      {serviceTypes.map((service) => {
+        const serviceFaqs = generateFaqs(primaryArea, service);
+        return (
+          <div class="mt-12">
+            <h2 class="text-2xl font-extrabold text-gray-900 mb-2">{service.name} — Common Questions</h2>
+            <dl class="divide-y divide-gray-200">
+              {serviceFaqs.map((faq) => (
+                <div class="py-6">
+                  <dt class="text-base font-bold text-gray-900">{faq.question}</dt>
+                  <dd class="mt-2 text-sm leading-relaxed text-gray-600">{faq.answer}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-brand-900 py-12">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-extrabold text-white">Still have a question?</h2>
+      <p class="mt-3 text-lg text-brand-200">Call us on {business.phone} — we are happy to help.</p>
+      <a
+        href={business.phoneHref}
+        class="mt-6 inline-flex items-center gap-2 rounded-lg bg-amber-500 px-8 py-4 text-lg font-bold text-brand-900 transition hover:bg-amber-400"
+      >
+        Call {business.phone}
+      </a>
+    </div>
+  </section>
+</BaseLayout>
