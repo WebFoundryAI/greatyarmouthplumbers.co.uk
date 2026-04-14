@@ -23,7 +23,6 @@ export interface Coordinates {
 export interface Business {
   name: string;
   legalName: string;
-  owner: string;
   phone: string;
   phoneHref: string;
   email: string;
@@ -42,7 +41,6 @@ export interface Business {
 export const business: Business = {
   name: 'Great Yarmouth Plumbers',
   legalName: 'Great Yarmouth Plumbers',
-  owner: 'Sam Altman',
   phone: '01493 334000',
   phoneHref: 'tel:+441493334000',
   email: 'Contact@greatyarmouthplumbers.co.uk',
@@ -60,7 +58,7 @@ export const business: Business = {
     { days: 'Sunday', hours: 'Emergency Service Only' },
     { days: 'Emergency Service', hours: '24/7' },
   ],
-  license: '',
+  license: '', // TODO: Add Gas Safe registration number
   yearEstablished: 2020,
   serviceRadius:
     'Great Yarmouth and surrounding Norfolk and Suffolk areas within 20 miles',

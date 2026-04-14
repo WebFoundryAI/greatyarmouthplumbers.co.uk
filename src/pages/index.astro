@@ -5,8 +5,9 @@ import { business, yearsInBusiness } from '../data/business';
 import { serviceTypes } from '../data/serviceTypes';
 import { serviceAreas } from '../data/serviceAreas';
 import { serviceUrl, areaUrl, contactUrl, aboutUrl } from '../lib/urls';
+import { BRAND } from '../data/brand';
 
-const title = 'Great Yarmouth Plumbers | Norfolk Plumber';
+const title = 'Great Yarmouth Plumbers | 24/7 Emergency Plumbing, Norfolk';
 const description = 'Great Yarmouth Plumbers provides reliable plumbing services across Norfolk. Emergency repairs, boiler service, drain cleaning and more. Call 01493 334000.';
 const years = yearsInBusiness();
 
@@ -47,11 +48,10 @@ const steps = [
           url: business.website,
           telephone: business.phone,
           email: business.email,
-          founder: {
-            '@type': 'Person',
-            name: business.owner,
-          },
           foundingDate: String(business.yearEstablished),
+          priceRange: '££',
+          image: `${business.website}/images/greatyarmouthplumbers-logo.webp`,
+          ...(BRAND.socialProfiles.length > 0 ? { sameAs: BRAND.socialProfiles } : {}),
           address: {
             '@type': 'PostalAddress',
             streetAddress: business.address.street,

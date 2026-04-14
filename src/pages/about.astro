@@ -7,12 +7,12 @@ import { serviceAreas } from '../data/serviceAreas';
 import { contactUrl } from '../lib/urls';
 
 const title = 'About Us | Great Yarmouth Plumbers';
-const description = 'Learn about Great Yarmouth Plumbers, owned by Sam Altman. Serving Norfolk since 2020 with reliable, professional plumbing services.';
+const description = 'Learn about Great Yarmouth Plumbers. Serving Norfolk since 2020 with reliable, professional plumbing services you can trust.';
 const years = yearsInBusiness();
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
-  { label: 'About Us' },
+  { label: 'About Us', href: '/about/' },
 ];
 
 const values = [
@@ -53,10 +53,6 @@ const values = [
             '@type': business.schemaType,
             '@id': `${business.website}/#business`,
             name: business.name,
-            founder: {
-              '@type': 'Person',
-              name: business.owner,
-            },
             foundingDate: String(business.yearEstablished),
           },
         },
@@ -94,7 +90,7 @@ const values = [
         <div>
           <h2 class="text-3xl font-extrabold text-gray-900">Our Story</h2>
           <p class="mt-6 text-lg leading-relaxed text-gray-600">
-            {business.name} was founded in {business.yearEstablished} by {business.owner} with a simple goal: to provide Great Yarmouth and the surrounding Norfolk area with plumbing services that people can trust. Over the past {years} years, we have grown from a one-person operation into a respected local company.
+            {business.name} was founded in {business.yearEstablished} with a simple goal: to provide Great Yarmouth and the surrounding Norfolk area with plumbing services that people can trust. Over the past {years} years, we have grown from a small local operation into a respected company serving Norfolk and beyond.
           </p>
           <p class="mt-4 text-lg leading-relaxed text-gray-600">
             We started because we saw a need for plumbers who actually turn up on time, explain the problem in plain English, and charge a fair price. That is still what drives us today. Every member of our team shares these values, and we work hard to live up to them on every single job.
@@ -107,7 +103,7 @@ const values = [
           <div class="aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100">
             <img
               src="/images/about-team.webp"
-              alt={`${business.owner} and the ${business.name} team`}
+              alt={`The ${business.name} team`}
               class="h-full w-full object-cover"
               width="600"
               height="450"
@@ -123,23 +119,23 @@ const values = [
     </div>
   </section>
 
-  <!-- Owner Spotlight -->
+  <!-- Meet Our Team -->
   <section class="bg-gray-50 py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-3xl text-center">
         <div class="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-brand-100 text-brand-700">
-          <Icon name="lucide:user" class="h-12 w-12" />
+          <Icon name="lucide:users" class="h-12 w-12" />
         </div>
-        <h2 class="text-3xl font-extrabold text-gray-900">Meet {business.owner}</h2>
-        <p class="mt-2 text-lg font-medium text-brand-600">Owner &amp; Lead Plumber</p>
+        <h2 class="text-3xl font-extrabold text-gray-900">Meet Our Team</h2>
+        <p class="mt-2 text-lg font-medium text-brand-600">Experienced Local Plumbers</p>
         <p class="mt-6 text-lg leading-relaxed text-gray-600">
-          {business.owner} founded {business.name} in {business.yearEstablished} after spending years working in the plumbing trade. With hands-on experience in every type of plumbing job, from fixing a dripping tap to repiping an entire property, {business.owner} brings real expertise to every project.
+          Every member of the {business.name} team has hands-on experience across the full range of plumbing work — from fixing a dripping tap to repiping an entire property. We invest in ongoing training so our skills and knowledge stay sharp.
         </p>
         <p class="mt-4 text-lg leading-relaxed text-gray-600">
-          "I started this company because I believe every homeowner deserves a plumber who is honest, reliable, and does quality work. That is the standard I hold myself and our team to on every job."
+          "We believe every homeowner deserves a plumber who is honest, reliable, and does quality work. That is the standard we hold ourselves to on every job."
         </p>
         <p class="mt-4 text-lg leading-relaxed text-gray-600">
-          When not on a job, {business.owner} can be found supporting local community events and staying up to date with the latest plumbing techniques and regulations. This commitment to ongoing learning ensures our customers always receive the best possible service.
+          We are active in the local community, supporting events and staying up to date with the latest plumbing techniques and regulations. This commitment to ongoing learning ensures our customers always receive the best possible service.
         </p>
       </div>
     </div>
@@ -191,6 +187,15 @@ const values = [
           <h3 class="font-bold text-gray-900">Work Guaranteed</h3>
           <p class="mt-2 text-sm text-gray-600">
             We stand behind our work. If something is not right, we will come back and fix it at no extra cost to you.
+          </p>
+        </div>
+        <div class="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+          <Icon name="lucide:badge-check" class="mb-4 h-8 w-8 text-brand-600" />
+          <h3 class="font-bold text-gray-900">Gas Safe Registered</h3>
+          <p class="mt-2 text-sm text-gray-600">
+            {business.license
+              ? `Our engineers are Gas Safe registered (No. ${business.license}). You can verify our registration at any time on the official Gas Safe Register.`
+              : 'Our engineers are Gas Safe registered, as required by law for all gas work in the UK. We are happy to provide our registration details on request.'}
           </p>
         </div>
       </div>

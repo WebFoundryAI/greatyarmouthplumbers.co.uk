@@ -384,6 +384,114 @@ export const serviceTypes: ServiceType[] = [
       },
     ],
   },
+
+  // 11 ── Emergency Plumber
+  {
+    slug: 'emergency-plumber',
+    name: 'Emergency Plumber',
+    shortDescription:
+      '24/7 emergency plumbing response for burst pipes, flooding, and urgent repairs.',
+    description:
+      'When a plumbing emergency strikes, every minute counts. Our emergency plumbers are on call around the clock to handle burst pipes, severe leaks, flooding, and any other urgent plumbing situation. We aim to reach you fast, assess the problem immediately, and carry out a lasting repair — minimising damage to your home.',
+    priceRange: { min: 80, max: 400 },
+    emergency: true,
+    icon: 'lucide:siren',
+    image: '/images/emergency-plumber.webp',
+    processSteps: [
+      {
+        title: 'Immediate Response',
+        description:
+          'Call us any time — day or night. We dispatch an emergency plumber as quickly as possible to your address.',
+      },
+      {
+        title: 'Damage Limitation',
+        description:
+          'On arrival we isolate the water supply if needed, stopping further damage to your property while we assess the situation.',
+      },
+      {
+        title: 'Emergency Repair',
+        description:
+          'We carry out the repair on the spot using parts carried in our vans, restoring your plumbing to working order.',
+      },
+      {
+        title: 'Follow-up Check',
+        description:
+          'We test the repair, check surrounding pipework, and advise on any additional work required to prevent a repeat incident.',
+      },
+    ],
+  },
+
+  // 12 ── Boiler Repair
+  {
+    slug: 'boiler-repair',
+    name: 'Boiler Repair',
+    shortDescription:
+      'Fast boiler diagnosis and repair to restore your heating and hot water.',
+    description:
+      'A broken boiler can leave you without heating or hot water at the worst possible time. Our engineers diagnose boiler faults quickly and carry out reliable repairs on all major makes and models. We carry common parts in our vans to resolve most issues on a single visit, getting your home warm again as quickly as possible.',
+    priceRange: { min: 120, max: 600 },
+    emergency: true,
+    icon: 'lucide:flame',
+    image: '/images/boiler-repair.webp',
+    processSteps: [
+      {
+        title: 'Fault Diagnosis',
+        description:
+          'We inspect the boiler, run diagnostics, and identify the root cause of the fault — whether it is a faulty component, pressure issue, or something else.',
+      },
+      {
+        title: 'Clear Quote',
+        description:
+          'Before any work begins, we explain what needs to be done and provide a transparent, upfront price.',
+      },
+      {
+        title: 'Repair',
+        description:
+          'We replace or fix the faulty parts using quality components, restoring the boiler to full working order.',
+      },
+      {
+        title: 'Safety Check & Test',
+        description:
+          'We test the repaired boiler, check flue gas readings, and confirm everything is operating safely and efficiently.',
+      },
+    ],
+  },
+
+  // 13 ── Leak Detection
+  {
+    slug: 'leak-detection',
+    name: 'Leak Detection',
+    shortDescription:
+      'Specialist equipment to locate hidden leaks in walls, floors, and underground pipes.',
+    description:
+      'Not all leaks are obvious. Hidden leaks inside walls, beneath floors, or underground can cause significant structural damage before they are noticed. We use specialist acoustic listening equipment and thermal imaging to pinpoint the exact location of a leak without unnecessary excavation, saving you time, disruption, and money.',
+    priceRange: { min: 90, max: 350 },
+    emergency: true,
+    icon: 'lucide:scan-search',
+    image: '/images/leak-detection.webp',
+    processSteps: [
+      {
+        title: 'Initial Assessment',
+        description:
+          'We review your water meter readings, visible signs of damp, and recent water bills to build a picture of where and how severe the leak may be.',
+      },
+      {
+        title: 'Acoustic Detection',
+        description:
+          'Using specialist listening equipment we scan walls, floors, and pipework to pinpoint the exact location of the leak.',
+      },
+      {
+        title: 'Confirm and Mark',
+        description:
+          'We confirm the leak location and mark it clearly, providing a written report of our findings before any repair work begins.',
+      },
+      {
+        title: 'Repair or Referral',
+        description:
+          'Where possible we carry out the repair in the same visit. For complex underground or structural leaks we provide a detailed scope of work and fixed-price quote.',
+      },
+    ],
+  },
 ];
 
 // ── Helper functions ──────────────────────────

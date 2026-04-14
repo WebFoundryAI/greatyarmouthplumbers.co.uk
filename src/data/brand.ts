@@ -16,5 +16,6 @@ export const BRAND = {
   ga4Id: "G-PSZ484RT88",
   gscVerification: "google961cee0b68e77cd7",
 
+  // TODO: Add real profile URLs below (Google Business Profile, Facebook, Checkatrade, Trustpilot)
   socialProfiles: [] as string[]
 };

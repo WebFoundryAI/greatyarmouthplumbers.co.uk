@@ -15,14 +15,16 @@ export default defineConfig({
     icon(),
     sitemap({
       filter: (page) =>
-        !page.includes('/admin/') && !page.includes('/api/'),
+        !page.includes('/admin/') &&
+        !page.includes('/api/') &&
+        !page.includes('/blog/'),
       serialize(item) {
         const lastmod = new Date().toISOString().split('T')[0];
         if (item.url === 'https://greatyarmouthplumbers.co.uk/') {
           item.priority = 1.0;
           item.changefreq = 'weekly';
           item.lastmod = lastmod;
-        } else if (/\/(services|areas)\/$/.test(item.url)) {
+        } else if (/\/(services|locations)\/$/.test(item.url)) {
           item.priority = 0.9;
           item.changefreq = 'weekly';
           item.lastmod = lastmod;
@@ -30,7 +32,7 @@ export default defineConfig({
           item.priority = 0.8;
           item.changefreq = 'weekly';
           item.lastmod = lastmod;
-        } else if (/\/areas\/[^/]+\/$/.test(item.url)) {
+        } else if (/\/locations\/[^/]+\/$/.test(item.url)) {
           item.priority = 0.8;
           item.changefreq = 'weekly';
           item.lastmod = lastmod;
